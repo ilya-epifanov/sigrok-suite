@@ -1,11 +1,10 @@
-name: sigrok
+name: sigrok-suite
 version: '20180814-master'
-summary: sigrok
+summary: sigrok suite (sigrok-cli and pulseview)
 description: |
-  This is my-snap's description. You have a paragraph or two to tell the
-  most important story about your snap. Keep it under 100 words though,
-  we live in tweetspace and your description wants to look good in the snap
-  store.
+  The sigrok project aims at creating a portable, cross-platform, Free/Libre/Open-Source
+  signal analysis software suite that supports various device types
+  (e.g. logic analyzers, oscilloscopes, and many more).
 
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots

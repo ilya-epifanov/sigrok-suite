@@ -1,0 +1,119 @@
+name: sigrok
+version: '20180814-master'
+summary: sigrok
+description: |
+  This is my-snap's description. You have a paragraph or two to tell the
+  most important story about your snap. Keep it under 100 words though,
+  we live in tweetspace and your description wants to look good in the snap
+  store.
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+plugs:
+  ubuntu-app-platform:
+    interface: content
+    content: ubuntu-app-platform1
+    target: ubuntu-app-platform
+    default-provider: ubuntu-app-platform
+  gnome-3-28-1804:
+    interface: content
+    content: gnome-3-28-1804
+    default-provider: gnome-3-28-1804
+    target: gnome-platform
+
+apps:
+  sigrok-cli:
+    command: sigrok-cli
+    plugs:
+      - home
+      - network
+      - raw-usb
+      - serial-port
+  pulseview:
+    command: desktop-launch pulseview
+    plugs:
+      - home
+      - network
+      - desktop
+      - opengl
+      - gsettings
+      - x11
+      - wayland
+      - raw-usb
+      - serial-port
+      - ubuntu-app-platform
+
+parts:
+  libserialport:
+    source: git://sigrok.org/libserialport
+    plugin: autotools
+  libsigrokdecode:
+    source: git://sigrok.org/libsigrokdecode
+    plugin: autotools
+    stage-packages:
+      - libglib2.0-0
+      - python3
+    build-packages:
+      - libglib2.0-dev
+      - python3-dev
+  libsigrok:
+    source: git://sigrok.org/libsigrok
+    plugin: autotools
+    after:
+      - libserialport
+    build-packages:
+      - g++
+      - libglib2.0-dev
+      - libglibmm-2.4-dev
+      - libzip-dev
+      - libusb-1.0-0-dev
+      - libftdi1-dev
+      - libieee1284-3-dev
+      - check
+      - python-numpy
+      - python-dev
+      - python-gi-dev
+      - python-setuptools
+      - swig
+      - doxygen
+  sigrok-firmware-fx2lafw:
+    source: git://sigrok.org/sigrok-firmware-fx2lafw
+    plugin: autotools
+    build-packages:
+      - sdcc
+  sigrok-util:
+    source: git://sigrok.org/sigrok-util
+    plugin: dump
+    override-build: |
+      PREFIX="$SNAPCRAFT_STAGE" firmware/dreamsourcelab-dslogic/sigrok-fwextract-dreamsourcelab-dslogic
+    prime:
+      - share/sigrok-firmware/*.fw
+  sigrok-cli:
+    source: git://sigrok.org/sigrok-cli
+    plugin: autotools
+    after:
+      - libsigrok
+      - libsigrokdecode
+      - sigrok-firmware-fx2lafw
+      - sigrok-util
+    build-packages:
+      - libglib2.0-dev
+  pulseview:
+    source: git://sigrok.org/pulseview
+    plugin: cmake
+    after:
+      - desktop-qt5
+      - libsigrok
+      - libsigrokdecode
+      - sigrok-firmware-fx2lafw
+      - sigrok-util
+    build-packages:
+      - libglib2.0-dev
+      - libboost-test-dev
+      - libboost-thread-dev
+      - libboost-filesystem-dev
+      - libboost-system-dev
+      - libqt5opengl5-dev
+      - libqt5svg5-dev
+      - qtbase5-dev

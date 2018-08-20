@@ -1,0 +1,8 @@
+[Desktop Entry]
+# Creative Commons CC0 1.0 Universal (CC0-1.0, Public Domain Dedication).
+Name=Sigrok-Meter
+GenericName=DMM GUI
+Categories=Development;Electronics;
+Comment=Control your DMM
+Exec=sigrok-meter
+Type=Application

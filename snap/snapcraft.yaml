@@ -8,6 +8,7 @@ description: |
 
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
+icon: sigrok_logo.png
 
 plugs:
   ubuntu-app-platform:
@@ -24,6 +25,7 @@ plugs:
 apps:
   sigrok-cli:
     command: sigrok-cli
+    desktop: usr/share/applications/org.sigrok.sigrok-cli.desktop
     plugs:
       - home
       - network
@@ -31,6 +33,7 @@ apps:
       - serial-port
   pulseview:
     command: desktop-launch pulseview
+    desktop: usr/share/applications/org.sigrok.PulseView.desktop
     plugs:
       - desktop
       - desktop-legacy
@@ -43,6 +46,20 @@ apps:
       - raw-usb
       - serial-port
       - ubuntu-app-platform
+  # sigrok-meter:
+  #   command: desktop-launch sigrok-meter
+  #   plugs:
+  #     - desktop
+  #     - desktop-legacy
+  #     - wayland
+  #     - unity7
+  #     - home
+  #     - network
+  #     - opengl
+  #     - gsettings
+  #     - raw-usb
+  #     - serial-port
+  #     - ubuntu-app-platform
 
 parts:
   libserialport:
@@ -62,6 +79,13 @@ parts:
     plugin: autotools
     after:
       - libserialport
+    stage-packages:
+      - libglib2.0-0
+      - libglibmm-2.4-1v5
+      - libzip4
+      - libusb-1.0-0
+      - libftdi1
+      - libieee1284-3
     build-packages:
       - g++
       - libglib2.0-dev
@@ -119,3 +143,17 @@ parts:
       - libqt5opengl5-dev
       - libqt5svg5-dev
       - qtbase5-dev
+  # sigrok-meter:
+  #   source: git://sigrok.org/sigrok-meter
+  #   plugin: make
+  #   after:
+  #     - desktop-qt5
+  #     - libsigrok
+  #     - libsigrokdecode
+  #     - sigrok-firmware-fx2lafw
+  #     - sigrok-util
+  #   stage-packages:
+  #     - python-pyqtgraph
+  #   build-packages:
+  #     - pyqt4-dev-tools
+  #     - qtbase5-dev

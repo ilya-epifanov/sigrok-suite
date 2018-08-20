@@ -25,7 +25,7 @@ plugs:
 apps:
   sigrok-cli:
     command: sigrok-cli
-    desktop: usr/share/applications/org.sigrok.sigrok-cli.desktop
+    desktop: share/applications/org.sigrok.sigrok-cli.desktop
     plugs:
       - home
       - network
@@ -33,7 +33,7 @@ apps:
       - serial-port
   pulseview:
     command: desktop-launch pulseview
-    desktop: usr/share/applications/org.sigrok.PulseView.desktop
+    desktop: share/applications/org.sigrok.PulseView.desktop
     plugs:
       - desktop
       - desktop-legacy

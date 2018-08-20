@@ -1,5 +1,5 @@
 name: sigrok-suite
-version: '20180814-master'
+version: '20180820-master'
 summary: sigrok suite (sigrok-cli and pulseview)
 description: |
   The sigrok project aims at creating a portable, cross-platform, Free/Libre/Open-Source
@@ -32,13 +32,14 @@ apps:
   pulseview:
     command: desktop-launch pulseview
     plugs:
+      - desktop
+      - desktop-legacy
+      - wayland
+      - unity7
       - home
       - network
-      - desktop
       - opengl
       - gsettings
-      - x11
-      - wayland
       - raw-usb
       - serial-port
       - ubuntu-app-platform
@@ -88,6 +89,8 @@ parts:
       PREFIX="$SNAPCRAFT_STAGE" firmware/dreamsourcelab-dslogic/sigrok-fwextract-dreamsourcelab-dslogic
     prime:
       - share/sigrok-firmware/*.fw
+    build-packages:
+      - wget
   sigrok-cli:
     source: git://sigrok.org/sigrok-cli
     plugin: autotools

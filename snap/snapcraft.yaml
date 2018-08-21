@@ -1,13 +1,13 @@
 name: sigrok-suite
-version: '20180820-master'
+version: '20180822-master'
 summary: sigrok suite (sigrok-cli and pulseview)
 description: |
   The sigrok project aims at creating a portable, cross-platform, Free/Libre/Open-Source
   signal analysis software suite that supports various device types
   (e.g. logic analyzers, oscilloscopes, and many more).
 
-grade: devel # must be 'stable' to release into candidate/stable channels
-confinement: devmode # use 'strict' once you have the right plugs and slots
+grade: devel
+confinement: strict
 icon: sigrok_logo.png
 
 plugs:
@@ -25,7 +25,7 @@ plugs:
 apps:
   sigrok-cli:
     command: sigrok-cli
-    desktop: share/applications/org.sigrok.sigrok-cli.desktop
+    # desktop: share/applications/org.sigrok.sigrok-cli.desktop
     plugs:
       - home
       - network
@@ -33,7 +33,7 @@ apps:
       - serial-port
   pulseview:
     command: desktop-launch pulseview
-    desktop: share/applications/org.sigrok.PulseView.desktop
+    # desktop: share/applications/org.sigrok.PulseView.desktop
     plugs:
       - desktop
       - desktop-legacy
@@ -46,6 +46,7 @@ apps:
       - raw-usb
       - serial-port
       - ubuntu-app-platform
+
   # sigrok-meter:
   #   command: desktop-launch sigrok-meter
   #   plugs:
@@ -70,22 +71,22 @@ parts:
     plugin: autotools
     stage-packages:
       - libglib2.0-0
-      - python3
+      - libdb5.3
+      - libpython3.5
     build-packages:
       - libglib2.0-dev
       - python3-dev
+    override-build: |
+      export PYTHON=/usr/bin/python3
+      env NOCONFIGURE=1 ./autogen.sh
+      ./configure --prefix=
+      make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
+      make DESTDIR=$SNAPCRAFT_PART_INSTALL install
   libsigrok:
     source: git://sigrok.org/libsigrok
     plugin: autotools
     after:
       - libserialport
-    stage-packages:
-      - libglib2.0-0
-      - libglibmm-2.4-1v5
-      - libzip4
-      - libusb-1.0-0
-      - libftdi1
-      - libieee1284-3
     build-packages:
       - g++
       - libglib2.0-dev
@@ -95,12 +96,27 @@ parts:
       - libftdi1-dev
       - libieee1284-3-dev
       - check
-      - python-numpy
-      - python-dev
+      - python3-numpy
+      - python3-dev
+      - python3-gi
       - python-gi-dev
-      - python-setuptools
+      - python3-setuptools
       - swig
       - doxygen
+    stage-packages:
+      - libglib2.0-0
+      - libglibmm-2.4-1v5
+      - libzip4
+      - libusb-1.0-0
+      - libftdi1-2
+      - libieee1284-3
+      - libpython3.5
+    override-build: |
+      export PYTHON=/usr/bin/python3
+      env NOCONFIGURE=1 ./autogen.sh
+      ./configure --prefix=
+      make -j$SNAPCRAFT_PARALLEL_BUILD_COUNT
+      make DESTDIR=$SNAPCRAFT_PART_INSTALL install
   sigrok-firmware-fx2lafw:
     source: git://sigrok.org/sigrok-firmware-fx2lafw
     plugin: autotools
@@ -143,6 +159,8 @@ parts:
       - libqt5opengl5-dev
       - libqt5svg5-dev
       - qtbase5-dev
+    stage-packages:
+      - libboost-serialization1.58.0
   # sigrok-meter:
   #   source: git://sigrok.org/sigrok-meter
   #   plugin: make

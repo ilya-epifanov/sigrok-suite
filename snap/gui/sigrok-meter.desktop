@@ -1,8 +1,9 @@
 [Desktop Entry]
 # Creative Commons CC0 1.0 Universal (CC0-1.0, Public Domain Dedication).
-Name=Sigrok-Meter
-GenericName=DMM GUI
+Name=sigrok-meter
+GenericName=DMM and other low-bandwidth instruments GUI
 Categories=Development;Electronics;
-Comment=Control your DMM
-Exec=sigrok-meter
+Comment=Control your DMM or other low-bandwidth instruments
+Exec=sigrok-suite.sigrok-meter
+NoDisplay=true
 Type=Application

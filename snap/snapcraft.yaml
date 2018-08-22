@@ -6,7 +6,7 @@ description: |
   signal analysis software suite that supports various device types
   (e.g. logic analyzers, oscilloscopes, and many more).
 
-grade: devel
+grade: stable
 confinement: strict
 icon: sigrok_logo.png
 

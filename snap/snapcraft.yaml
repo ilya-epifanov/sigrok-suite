@@ -10,22 +10,16 @@ grade: devel
 confinement: strict
 icon: sigrok_logo.png
 
+# https://forum.snapcraft.io/t/how-to-use-the-system-gtk-theme-via-the-gtk-common-themes-snap/6235
 plugs:
-  ubuntu-app-platform:
+  gnome-3-26-1604:
     interface: content
-    content: ubuntu-app-platform1
-    target: ubuntu-app-platform
-    default-provider: ubuntu-app-platform
-  gnome-3-28-1804:
-    interface: content
-    content: gnome-3-28-1804
-    default-provider: gnome-3-28-1804
     target: gnome-platform
+    default-provider: gnome-3-26-1604
 
 apps:
   sigrok-cli:
     command: sigrok-cli
-    # desktop: share/applications/org.sigrok.sigrok-cli.desktop
     plugs:
       - home
       - network
@@ -33,7 +27,6 @@ apps:
       - serial-port
   pulseview:
     command: desktop-launch pulseview
-    # desktop: share/applications/org.sigrok.PulseView.desktop
     plugs:
       - desktop
       - desktop-legacy
@@ -45,7 +38,7 @@ apps:
       - gsettings
       - raw-usb
       - serial-port
-      - ubuntu-app-platform
+      - gnome-3-26-1604
 
   # sigrok-meter:
   #   command: desktop-launch sigrok-meter
@@ -126,7 +119,7 @@ parts:
     source: git://sigrok.org/sigrok-util
     plugin: dump
     override-build: |
-      PREFIX="$SNAPCRAFT_STAGE" firmware/dreamsourcelab-dslogic/sigrok-fwextract-dreamsourcelab-dslogic
+      PREFIX="$SNAPCRAFT_PART_INSTALL" firmware/dreamsourcelab-dslogic/sigrok-fwextract-dreamsourcelab-dslogic
     prime:
       - share/sigrok-firmware/*.fw
     build-packages:

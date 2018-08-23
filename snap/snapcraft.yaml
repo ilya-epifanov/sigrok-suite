@@ -7,7 +7,7 @@ description: |
   (e.g. logic analyzers, oscilloscopes, and many more).
 
 grade: stable
-confinement: strict
+confinement: classic
 icon: sigrok_logo.png
 
 # https://forum.snapcraft.io/t/how-to-use-the-system-gtk-theme-via-the-gtk-common-themes-snap/6235
@@ -28,32 +28,32 @@ apps:
   pulseview:
     command: desktop-launch pulseview
     plugs:
+      - home
+      - network
+      - raw-usb
+      - serial-port
       - desktop
       - desktop-legacy
       - wayland
       - unity7
-      - home
-      - network
       - opengl
       - gsettings
-      - raw-usb
-      - serial-port
       - gnome-3-26-1604
 
   # sigrok-meter:
   #   command: desktop-launch sigrok-meter
   #   plugs:
+  #     - home
+  #     - network
+  #     - raw-usb
+  #     - serial-port
   #     - desktop
   #     - desktop-legacy
   #     - wayland
   #     - unity7
-  #     - home
-  #     - network
   #     - opengl
   #     - gsettings
-  #     - raw-usb
-  #     - serial-port
-  #     - ubuntu-app-platform
+  #     - gnome-3-26-1604
 
 parts:
   libserialport:

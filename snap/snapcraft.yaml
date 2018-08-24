@@ -11,34 +11,34 @@ confinement: classic
 icon: sigrok_logo.png
 
 # https://forum.snapcraft.io/t/how-to-use-the-system-gtk-theme-via-the-gtk-common-themes-snap/6235
-plugs:
-  gnome-3-26-1604:
-    interface: content
-    target: gnome-platform
-    default-provider: gnome-3-26-1604
+# plugs:
+#   gnome-3-26-1604:
+#     interface: content
+#     target: gnome-platform
+#     default-provider: gnome-3-26-1604
 
 apps:
   sigrok-cli:
     command: sigrok-cli
-    plugs:
-      - home
-      - network
-      - raw-usb
-      - serial-port
+    # plugs:
+    #   - home
+    #   - network
+    #   - raw-usb
+    #   - serial-port
   pulseview:
     command: desktop-launch pulseview
-    plugs:
-      - home
-      - network
-      - raw-usb
-      - serial-port
-      - desktop
-      - desktop-legacy
-      - wayland
-      - unity7
-      - opengl
-      - gsettings
-      - gnome-3-26-1604
+    # plugs:
+    #   - home
+    #   - network
+    #   - raw-usb
+    #   - serial-port
+    #   - desktop
+    #   - desktop-legacy
+    #   - wayland
+    #   - unity7
+    #   - opengl
+    #   - gsettings
+    #   - gnome-3-26-1604
 
   # sigrok-meter:
   #   command: desktop-launch sigrok-meter

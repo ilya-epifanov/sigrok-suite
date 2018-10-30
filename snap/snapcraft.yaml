@@ -1,5 +1,5 @@
 name: sigrok-suite
-version: '20180930-3-master'
+version: '20180930-4-master'
 summary: sigrok suite (sigrok-cli and pulseview)
 description: |
   The sigrok project aims at creating a portable, cross-platform, Free/Libre/Open-Source
@@ -125,6 +125,8 @@ parts:
     plugin: dump
     override-build: |
       PREFIX="$SNAPCRAFT_PART_INSTALL" firmware/dreamsourcelab-dslogic/sigrok-fwextract-dreamsourcelab-dslogic
+      pip3 install pyserial bluepy
+      install -t $SNAPCRAFT_PART_INSTALL/bin util/eevblog-121gw/eev121gw-ble-uart-relay
     prime:
       - share/sigrok-firmware/*.fw
     build-packages:

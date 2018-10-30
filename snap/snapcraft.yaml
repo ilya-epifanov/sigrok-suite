@@ -1,5 +1,5 @@
 name: sigrok-suite
-version: '20180929-2-master'
+version: '20180930-3-master'
 summary: sigrok suite (sigrok-cli and pulseview)
 description: |
   The sigrok project aims at creating a portable, cross-platform, Free/Libre/Open-Source
@@ -7,41 +7,43 @@ description: |
   (e.g. logic analyzers, oscilloscopes, and many more).
 
 grade: stable
-confinement: classic
+# confinement: classic
 icon: sigrok_logo.png
 
 # https://forum.snapcraft.io/t/how-to-use-the-system-gtk-theme-via-the-gtk-common-themes-snap/6235
-# plugs:
-#   gnome-3-28-1804:
-#     interface: content
-#     target: gnome-platform
-#     default-provider: gnome-3-28-1804
+plugs:
+  gnome-3-28-1804:
+    interface: content
+    target: gnome-platform
+    default-provider: gnome-3-28-1804
 
-environment:
-  PATH: $SNAP/bin:$SNAP/usr/bin
+# environment:
+#   PATH: $SNAP/bin:$SNAP/usr/bin
 
 apps:
   sigrok-cli:
     command: sigrok-cli
-    # plugs:
-    #   - home
-    #   - network
-    #   - raw-usb
-    #   - serial-port
+    plugs:
+      - home
+      - network
+      - raw-usb
+      - serial-port
+      - bluez
   pulseview:
     command: desktop-launch pulseview
-    # plugs:
-    #   - home
-    #   - network
-    #   - raw-usb
-    #   - serial-port
-    #   - desktop
-    #   - desktop-legacy
-    #   - wayland
-    #   - unity7
-    #   - opengl
-    #   - gsettings
-    #   - gnome-3-28-1804
+    plugs:
+      - home
+      - network
+      - raw-usb
+      - serial-port
+      - bluez
+      - desktop
+      - desktop-legacy
+      - wayland
+      - unity7
+      - opengl
+      - gsettings
+      - gnome-3-28-1804
 
   # sigrok-meter:
   #   command: bin/desktop-launch bin/sigrok-meter
